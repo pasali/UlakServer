@@ -1,6 +1,10 @@
 package com.pasali.ulakserver;
 import java.net.*;
+import java.sql.SQLException;
 import java.io.*;
+
+import com.pasali.database.Message;
+import com.pasali.database.MsgDAO;
 
 public class Server {
 
@@ -10,6 +14,7 @@ public class Server {
 	private BufferedReader in = null;
 	private String inputLine;
 	private String[] inData;
+	private MsgDAO msgdao;
 
 	public String getInputLine() {								
 		return inputLine;		
@@ -20,6 +25,7 @@ public class Server {
 	}
 
 	public void init() throws IOException {
+		msgdao = new MsgDAO();
 		try {
 			serverSocket = new ServerSocket(5353);
 		} catch (IOException e) {
@@ -53,7 +59,11 @@ public class Server {
 
 		while ((inputLine = in.readLine()) != null) {
 			inData = inputLine.split("\\|");
-			//new ServerGUI(inData[1],inData[0]);
+			try {
+				msgdao.addMsg(new Message(inData[1], inData[0]));
+			} catch (ClassNotFoundException | SQLException e) {
+				System.err.println("SQLite kütüphanesi bulunamadı");
+			}
 		}
 
 	}

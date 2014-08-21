@@ -54,8 +54,7 @@ public class MsgDAO {
 	public Message getMsg(int id) {
 		Message msg = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:test.db");
+			connectDatabase();
 			c.setAutoCommit(false);
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + TABLE_MSG

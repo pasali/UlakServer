@@ -1,16 +1,21 @@
 package com.pasali.ulakserver;
 
+
 import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import com.pasali.database.Message;
+import com.pasali.database.MsgDAO;
 
 public class MessagesGUI {
 
@@ -34,8 +39,14 @@ public class MessagesGUI {
 
 	/**
 	 * Create the application.
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public MessagesGUI() {
+	public MessagesGUI() throws ClassNotFoundException, SQLException {
+		MsgDAO a = new MsgDAO();
+		//a.create();
+		com.pasali.database.Message msg = new com.pasali.database.Message("124434", "mehmddet");
+		//a.addMsg(msg);
 		initialize();
 	}
 
@@ -46,16 +57,18 @@ public class MessagesGUI {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 280, 544);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		final MsgDAO msgdao = new MsgDAO();
+		final HashMap<String, String> numbers = msgdao.getAllMsg();
 		
-		final String[] items = {"A", "B", "C", "D"};
-		JList list = new JList(items);
-
+		JList list = new JList(numbers.keySet().toArray());
 		list.addMouseListener(new MouseAdapter() {
 		    public void mouseClicked(MouseEvent evt) {
 		        JList list = (JList)evt.getSource();
 		        if (evt.getClickCount() == 2) {
 		            int index = list.locationToIndex(evt.getPoint());
-		            System.out.println(items[index]);
+		            String id = numbers.get(numbers.keySet().toArray()[index]);
+		            Message m = msgdao.getMsg(Integer.valueOf(id));
+		            new ServerGUI(m.getNo(), m.getBody());
 		        } 
 		    }
 		});
