@@ -44,7 +44,7 @@ public class SendSmsGUI {
 		JButton btnGnder = new JButton("Gönder");
 		btnGnder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Run.s.sendMsg();
+				MainClass.s.sendMsg();
 				frame.dispose();
 			}
 		});
