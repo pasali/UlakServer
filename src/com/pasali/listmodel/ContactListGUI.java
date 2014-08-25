@@ -3,10 +3,12 @@ package com.pasali.listmodel;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -26,8 +28,10 @@ public class ContactListGUI extends JPanel {
 	static HashMap<String, String> numbers = null;
 	static MsgDAO msgdao;
 
-	public ContactListGUI() {
+	public ContactListGUI() throws SocketException {
 		setLayout(new BorderLayout());
+		JLabel ipAdress = new JLabel(new IpAdress().displayInterfaceInformation());
+		
 		numbers = new HashMap<String, String>();
 		contacts = new ArrayList<Contact>();
 		msgdao = new MsgDAO();
@@ -56,9 +60,10 @@ public class ContactListGUI extends JPanel {
 		});
 
 		add(pane, BorderLayout.NORTH);
+		add(ipAdress, BorderLayout.SOUTH);
 	}
 
-	public static void init() {
+	public static void init() throws SocketException {
 		JFrame frame = new JFrame("Gelen Mesajlar");
 		frame.setBounds(300, 100, 250, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
