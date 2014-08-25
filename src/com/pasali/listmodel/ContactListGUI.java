@@ -39,7 +39,7 @@ public class ContactListGUI extends JPanel {
 
 		contactList = new JList<Object>(contacts.toArray());
 		contactList.setCellRenderer(new ContactRenderer());
-		contactList.setVisibleRowCount(4);
+		contactList.setVisibleRowCount(5);
 		JScrollPane pane = new JScrollPane(contactList);
 
 		contactList.addMouseListener(new MouseAdapter() {
@@ -60,10 +60,11 @@ public class ContactListGUI extends JPanel {
 
 	public static void init() {
 		JFrame frame = new JFrame("Gelen Mesajlar");
-		
+		frame.setBounds(300, 100, 250, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setContentPane(new ContactListGUI());
-		frame.pack();
+		frame.setResizable(false);
 		frame.setVisible(true);
+		
 	}
 }
