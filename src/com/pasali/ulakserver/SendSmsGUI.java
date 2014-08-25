@@ -27,7 +27,6 @@ public class SendSmsGUI {
 	private void initialize(String number) {
 		frame = new JFrame();
 		frame.setBounds(700, 100, 212, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
 		JButton btnGnder = new JButton("Gönder");

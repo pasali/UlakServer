@@ -13,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ListModel;
 
 import com.pasali.database.Message;
 import com.pasali.database.MsgDAO;
@@ -25,7 +24,6 @@ public class ContactListGUI extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static ArrayList<Contact> contacts;
 	private static JList<?> contactList;
 	static HashMap<String, String> numbers = null;
 	static MsgDAO msgdao;
@@ -38,13 +36,11 @@ public class ContactListGUI extends JPanel {
 		JLabel ipAdress = new JLabel(IpAdress.displayInterfaceInformation());
 		
 		numbers = new HashMap<String, String>();
-		contacts = new ArrayList<Contact>();
 		msgdao = new MsgDAO();
 		numbers = msgdao.getAllMsg();
 		model = new DefaultListModel<Contact>();
 		//Veritabanında alınan verileri listeye aktar
 		for (Object s : numbers.keySet().toArray()) {
-			//contacts.add(new Contact(s.toString(), numbers.get(s)));
 			model.addElement(new Contact(s.toString(), numbers.get(s)));
 		}
 
@@ -74,7 +70,6 @@ public class ContactListGUI extends JPanel {
 		model.removeAllElements();
 		//Veritabanında alınan verileri listeye aktar
 		for (Object s : numbers.keySet().toArray()) {
-			//contacts.add(new Contact(s.toString(), numbers.get(s)));
 			model.addElement(new Contact(s.toString(), numbers.get(s)));
 		}
 		contactList.setModel(model);

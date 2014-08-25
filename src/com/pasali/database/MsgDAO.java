@@ -26,7 +26,7 @@ public class MsgDAO {
 		try {
 			connectDatabase();
 			stmt = c.createStatement();
-			String DATABASE_CREATE = "create table " + TABLE_MSG + "("
+			String DATABASE_CREATE = "create table if not exists " + TABLE_MSG + "("
 					+ COLUMN_ID + " integer primary key autoincrement, "
 					+ COLUMN_NO + " text not null, " + COLUMN_BODY
 					+ " text not null" + ");";
