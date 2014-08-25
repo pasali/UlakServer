@@ -7,11 +7,13 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ListModel;
 
 import com.pasali.database.Message;
 import com.pasali.database.MsgDAO;
@@ -24,9 +26,10 @@ public class ContactListGUI extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static ArrayList<Contact> contacts;
-	private JList<?> contactList;
+	private static JList<?> contactList;
 	static HashMap<String, String> numbers = null;
 	static MsgDAO msgdao;
+	static DefaultListModel model;
 
 	public ContactListGUI() throws SocketException {
 		setLayout(new BorderLayout());
@@ -38,17 +41,17 @@ public class ContactListGUI extends JPanel {
 		contacts = new ArrayList<Contact>();
 		msgdao = new MsgDAO();
 		numbers = msgdao.getAllMsg();
-		
+		model = new DefaultListModel<Contact>();
 		//Veritabanında alınan verileri listeye aktar
 		for (Object s : numbers.keySet().toArray()) {
-			contacts.add(new Contact(s.toString(), numbers.get(s)));
+			//contacts.add(new Contact(s.toString(), numbers.get(s)));
+			model.addElement(new Contact(s.toString(), numbers.get(s)));
 		}
 
-		contactList = new JList<Object>(contacts.toArray());
+		contactList = new JList(model);
 		contactList.setCellRenderer(new ContactRenderer());
 		contactList.setVisibleRowCount(5);
 		JScrollPane pane = new JScrollPane(contactList);
-
 		contactList.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
 				if (evt.getClickCount() == 2) {
@@ -64,6 +67,19 @@ public class ContactListGUI extends JPanel {
 
 		add(pane, BorderLayout.NORTH);
 		add(ipAdress, BorderLayout.SOUTH);
+	}
+	public static void updateModel() {
+		numbers = new HashMap<String, String>();
+		numbers = msgdao.getAllMsg();
+		model.removeAllElements();
+		//Veritabanında alınan verileri listeye aktar
+		for (Object s : numbers.keySet().toArray()) {
+			//contacts.add(new Contact(s.toString(), numbers.get(s)));
+			model.addElement(new Contact(s.toString(), numbers.get(s)));
+		}
+		contactList.setModel(model);
+		contactList.repaint();
+		contactList.updateUI();
 	}
 
 	public static void init() throws SocketException {

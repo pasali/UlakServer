@@ -17,23 +17,6 @@ public class ServerGUI {
 	
 
 	/**
-	 * Launch the application.
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ServerGUI window = new ServerGUI();
-					window.frame.setVisible(true);
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	
 	 * Create the application.
 	 */
 	public ServerGUI(String no, String msg) {

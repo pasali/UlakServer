@@ -15,17 +15,6 @@ public class SendSmsGUI {
 	public static JTextArea textArea;
 
 	/**
-	 * Launch the application.
-	 */
-	/*
-	 * public static void main(String[] args) { EventQueue.invokeLater(new
-	 * Runnable() { public void run() { try { SendSmsGUI window = new
-	 * SendSmsGUI(); window.frame.setVisible(true);
-	 * 
-	 * } catch (Exception e) { e.printStackTrace(); } } }); }
-	 */
-
-	/**
 	 * Create the application.
 	 */
 	public SendSmsGUI(String no) {

@@ -5,6 +5,7 @@ import java.io.*;
 
 import com.pasali.database.Message;
 import com.pasali.database.MsgDAO;
+import com.pasali.listmodel.ContactListGUI;
 
 public class Server {
 
@@ -61,6 +62,7 @@ public class Server {
 			inData = inputLine.split("\\|");
 			try {
 				msgdao.addMsg(new Message(inData[1], inData[0]));
+				ContactListGUI.updateModel();
 			} catch (ClassNotFoundException | SQLException e) {
 				System.err.println("SQLite kütüphanesi bulunamadı");
 			}
