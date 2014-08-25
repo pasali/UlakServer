@@ -30,13 +30,16 @@ public class ContactListGUI extends JPanel {
 
 	public ContactListGUI() throws SocketException {
 		setLayout(new BorderLayout());
-		JLabel ipAdress = new JLabel(new IpAdress().displayInterfaceInformation());
+		// İp adresi yazdır
+		new IpAdress();
+		JLabel ipAdress = new JLabel(IpAdress.displayInterfaceInformation());
 		
 		numbers = new HashMap<String, String>();
 		contacts = new ArrayList<Contact>();
 		msgdao = new MsgDAO();
 		numbers = msgdao.getAllMsg();
 		
+		//Veritabanında alınan verileri listeye aktar
 		for (Object s : numbers.keySet().toArray()) {
 			contacts.add(new Contact(s.toString(), numbers.get(s)));
 		}
