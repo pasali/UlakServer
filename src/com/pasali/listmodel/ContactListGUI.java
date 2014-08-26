@@ -1,6 +1,9 @@
 package com.pasali.listmodel;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.SocketException;
@@ -11,11 +14,15 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import com.pasali.database.Message;
 import com.pasali.database.MsgDAO;
+import com.pasali.ulakserver.AboutGUI;
 import com.pasali.ulakserver.ServerGUI;
 
 public class ContactListGUI extends JPanel {
@@ -28,13 +35,14 @@ public class ContactListGUI extends JPanel {
 	static HashMap<String, String> numbers = null;
 	static MsgDAO msgdao;
 	static DefaultListModel model;
+	static JFrame frame;
 
 	public ContactListGUI() throws SocketException {
 		setLayout(new BorderLayout());
+	
 		// İp adresi yazdır
 		new IpAdress();
 		JLabel ipAdress = new JLabel(IpAdress.displayInterfaceInformation());
-		
 		numbers = new HashMap<String, String>();
 		msgdao = new MsgDAO();
 		numbers = msgdao.getAllMsg();
@@ -43,7 +51,6 @@ public class ContactListGUI extends JPanel {
 		for (Object s : numbers.keySet().toArray()) {
 			model.addElement(new Contact(s.toString(), numbers.get(s)));
 		}
-
 		contactList = new JList(model);
 		contactList.setCellRenderer(new ContactRenderer());
 		contactList.setVisibleRowCount(5);
@@ -78,12 +85,45 @@ public class ContactListGUI extends JPanel {
 	}
 
 	public static void init() throws SocketException {
-		JFrame frame = new JFrame("Gelen Mesajlar");
+		frame = new JFrame("Gelen Mesajlar");
+		
+		JMenuBar menubar = new JMenuBar();
+
+        JMenu file = new JMenu("Yardım");
+        file.setMnemonic(KeyEvent.VK_Y);
+
+        JMenuItem MenuItemHowTo = new JMenuItem("Nasıl çalışır?");
+        MenuItemHowTo.setMnemonic(KeyEvent.VK_N);
+        MenuItemHowTo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                System.exit(0);
+            }
+
+        });
+        
+        JMenuItem MenuItemAbout = new JMenuItem("Hakkında");
+        MenuItemAbout.setMnemonic(KeyEvent.VK_H);
+        MenuItemAbout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                new AboutGUI();
+            }
+
+        });
+
+        file.add(MenuItemAbout);
+        file.add(MenuItemHowTo);
+        menubar.add(file);
+
+        frame.setJMenuBar(menubar);
 		frame.setBounds(300, 100, 250, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setContentPane(new ContactListGUI());
 		frame.setResizable(false);
 		frame.setVisible(true);
+		
+	
 		
 	}
 }
