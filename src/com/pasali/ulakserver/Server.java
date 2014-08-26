@@ -58,7 +58,7 @@ public class Server {
 	}
 
 	public void showMsg(String msg) {
-		JOptionPane.showMessageDialog(null, msg);
+		JOptionPane.showMessageDialog(ContactListGUI.frame, msg);
 	}
 	public void getMsg() throws IOException {
 

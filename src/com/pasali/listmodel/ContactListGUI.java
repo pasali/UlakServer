@@ -36,7 +36,7 @@ public class ContactListGUI extends JPanel {
 	static HashMap<String, String> numbers = null;
 	public static MsgDAO msgdao;
 	static DefaultListModel model;
-	static JFrame frame;
+	public static JFrame frame;
 	public static String status;
 
 	public ContactListGUI() throws SocketException, SQLException {
@@ -83,7 +83,7 @@ public class ContactListGUI extends JPanel {
 			model.addElement(new Contact(s.toString(), numbers.get(s)));
 		}
 		contactList.setModel(model);
-		contactList.repaint();
+		contactList.setSelectedIndex(WHEN_FOCUSED);
 		contactList.updateUI();
 	}
 
