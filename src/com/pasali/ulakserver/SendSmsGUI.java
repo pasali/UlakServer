@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import com.pasali.listmodel.ContactListGUI;
+
 public class SendSmsGUI {
 
 	private JFrame frame;
@@ -33,6 +35,7 @@ public class SendSmsGUI {
 		btnGnder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				MainClass.s.sendMsg();
+				ContactListGUI.updateModel();
 				frame.dispose();
 			}
 		});

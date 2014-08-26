@@ -50,6 +50,16 @@ public class MsgDAO {
 		c.close();
 
 	}
+	
+	public void delMsg(String id) throws SQLException, ClassNotFoundException {
+		connectDatabase();
+		stmt = c.createStatement();
+		String sql = "DELETE FROM " + TABLE_MSG + " WHERE " + COLUMN_ID  +  " = '" + id +"' ;";
+		stmt.executeUpdate(sql);
+		stmt.close();
+		c.close();
+
+	}
 
 	public Message getMsg(int id) {
 		Message msg = null;

@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.SocketException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -33,17 +34,17 @@ public class ContactListGUI extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private static JList<?> contactList;
 	static HashMap<String, String> numbers = null;
-	static MsgDAO msgdao;
+	public static MsgDAO msgdao;
 	static DefaultListModel model;
 	static JFrame frame;
 	public static String status;
 
-	public ContactListGUI() throws SocketException {
+	public ContactListGUI() throws SocketException, SQLException {
 		setLayout(new BorderLayout());
 	
 		// İp adresi yazdır
-		
 		JLabel ipAdress = new JLabel(status);
+		
 		numbers = new HashMap<String, String>();
 		msgdao = new MsgDAO();
 		numbers = msgdao.getAllMsg();
@@ -64,7 +65,7 @@ public class ContactListGUI extends JPanel {
 					Contact element = (Contact) contactList.getModel()
 							.getElementAt(selected[i]);
 					Message m = msgdao.getMsg(Integer.valueOf(element.getId()));
-					new ServerGUI(m.getNo(), m.getBody());
+					new ServerGUI(m.getNo(), m.getBody(), element.getId());
 				}
 			}}
 		});
@@ -86,7 +87,7 @@ public class ContactListGUI extends JPanel {
 		contactList.updateUI();
 	}
 
-	public static void init() throws SocketException {
+	public static void init() throws SocketException, SQLException {
 		frame = new JFrame("Gelen Mesajlar");
 		new IpAdress();
 		status = IpAdress.displayInterfaceInformation();

@@ -2,12 +2,14 @@ package com.pasali.ulakserver;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import com.pasali.listmodel.ContactListGUI;
 
 public class ServerGUI {
 
@@ -19,14 +21,14 @@ public class ServerGUI {
 	/**
 	 * Create the application.
 	 */
-	public ServerGUI(String no, String msg) {
-		initialize(no,msg);
+	public ServerGUI(String no, String msg, String id) {
+		initialize(no,msg, id);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(String no, String msg) {
+	private void initialize(String no, String msg, final String id) {
 		frame = new JFrame();
 		frame.setBounds(700, 100, 212, 300);
 		frame.getContentPane().setLayout(null);
@@ -35,6 +37,15 @@ public class ServerGUI {
 		btnGnder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				new SendSmsGUI(textField.getText());
+				try {
+					ContactListGUI.msgdao.delMsg(id);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				frame.dispose();
 			}
 		});
