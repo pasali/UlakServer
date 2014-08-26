@@ -36,13 +36,14 @@ public class ContactListGUI extends JPanel {
 	static MsgDAO msgdao;
 	static DefaultListModel model;
 	static JFrame frame;
+	public static String status;
 
 	public ContactListGUI() throws SocketException {
 		setLayout(new BorderLayout());
 	
 		// İp adresi yazdır
-		new IpAdress();
-		JLabel ipAdress = new JLabel(IpAdress.displayInterfaceInformation());
+		
+		JLabel ipAdress = new JLabel(status);
 		numbers = new HashMap<String, String>();
 		msgdao = new MsgDAO();
 		numbers = msgdao.getAllMsg();
@@ -71,6 +72,7 @@ public class ContactListGUI extends JPanel {
 		add(pane, BorderLayout.NORTH);
 		add(ipAdress, BorderLayout.SOUTH);
 	}
+	
 	public static void updateModel() {
 		numbers = new HashMap<String, String>();
 		numbers = msgdao.getAllMsg();
@@ -86,7 +88,8 @@ public class ContactListGUI extends JPanel {
 
 	public static void init() throws SocketException {
 		frame = new JFrame("Gelen Mesajlar");
-		
+		new IpAdress();
+		status = IpAdress.displayInterfaceInformation();
 		JMenuBar menubar = new JMenuBar();
 
         JMenu file = new JMenu("Yardım");

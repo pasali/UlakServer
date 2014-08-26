@@ -3,6 +3,8 @@ import java.net.*;
 import java.sql.SQLException;
 import java.io.*;
 
+import javax.swing.JOptionPane;
+
 import com.pasali.database.Message;
 import com.pasali.database.MsgDAO;
 import com.pasali.listmodel.ContactListGUI;
@@ -41,8 +43,7 @@ public class Server {
 			System.err.println("Accept failed.");
 			System.exit(1);
 		}
-
-		System.out.println(clientSocket.getLocalAddress() + " baglandı.");
+		showMsg(clientSocket.getRemoteSocketAddress() + " baglandı.");
 		out = new PrintWriter(clientSocket.getOutputStream(), true);
 		in = new BufferedReader(new InputStreamReader(
 				clientSocket.getInputStream()));
@@ -56,6 +57,9 @@ public class Server {
 		out.flush();
 	}
 
+	public void showMsg(String msg) {
+		JOptionPane.showMessageDialog(null, msg);
+	}
 	public void getMsg() throws IOException {
 
 		while ((inputLine = in.readLine()) != null) {
